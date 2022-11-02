@@ -12,32 +12,40 @@ class Emp
 {
 
     #[ORM\Id]
-    #[ORM\Column( name:'EMPNO')]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+
+    #[ORM\Column]
     private ?string $empNo = null;
 
-    #[ORM\Column(length: 255 , name:'ENAME')]
+    #[ORM\Column(length: 255 )]
     private ?string $ename = null;
 
-    #[ORM\Column(length: 255 , name:'JOB')]
+    #[ORM\Column(length: 255 )]
     private ?string $job = null;
 
-    #[ORM\Column( name:'MGR')]
-    private ?int $mgr = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE , name:'HIREDATE' )]
+    #[ORM\Column(type: Types::DATE_MUTABLE )]
     private ?\DateTimeInterface $hireDate = null;
 
-    #[ORM\Column( name:'COMM' )]
+    #[ORM\Column]
     private ?int $comm = null;
 
-    #[ORM\Column( name:'SAL' )]
+    #[ORM\Column]
     private ?int $sal = null;
 
-    #[ORM\ManyToOne(inversedBy: 'emps'  )]
+    #[ORM\ManyToOne(inversedBy: 'emps' ) ]
     private ?Dept $dept = null;
 
+    #[ORM\ManyToOne(inversedBy: 'emps')]
+    private ?Managers $mgr = null;
 
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
     public function getEmpNo(): ?string
     {
         return $this->empNo;
@@ -70,18 +78,6 @@ class Emp
     public function setJob(string $job): self
     {
         $this->job = $job;
-
-        return $this;
-    }
-
-    public function getMgr(): ?int
-    {
-        return $this->mgr;
-    }
-
-    public function setMgr(int $mgr): self
-    {
-        $this->mgr = $mgr;
 
         return $this;
     }
@@ -130,6 +126,18 @@ class Emp
     public function setDept(?Dept $dept): self
     {
         $this->dept = $dept;
+
+        return $this;
+    }
+
+    public function getMgr(): ?Managers
+    {
+        return $this->mgr;
+    }
+
+    public function setMgr(?Managers $mgr): self
+    {
+        $this->mgr = $mgr;
 
         return $this;
     }

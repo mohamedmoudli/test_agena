@@ -39,6 +39,15 @@ class DeptRepository extends ServiceEntityRepository
         }
     }
 
+    public function findDept(){
+
+        return $this->createQueryBuilder('d')->select('d.dname')
+            ->addSelect('COUNT(e.empNo) as nbEmp')
+            ->leftJoin('d.emps'  , 'e')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Dept[] Returns an array of Dept objects
 //     */
